@@ -1,0 +1,31 @@
+name: Windows PC
+
+on:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Ver informações do PC
+        run: |
+          systeminfo
+          echo.
+          echo ===== CPU =====
+          wmic cpu get name
+          echo.
+          echo ===== RAM =====
+          wmic computersystem get TotalPhysicalMemory
+          echo.
+          echo ===== GPU =====
+          wmic path win32_VideoController get name
+
+      - name: Ver espaço do disco
+        run: |
+          Get-PSDrive -PSProvider FileSystem
+
+      - name: Teste do Windows
+        run: |
+          Write-Host "Windows runner iniciado!"
+          Write-Host "Ambiente pronto para executar tarefas."
